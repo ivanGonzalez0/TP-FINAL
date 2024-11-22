@@ -3,7 +3,6 @@ export interface Apuesta{
     jugar():void;
     finalizar():void;
 }
-
 export class Casino {
     private usuario: string;
     private constraseña: string;
