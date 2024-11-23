@@ -13,6 +13,7 @@ export abstract class Juego implements Apuesta {
     abstract apuesta(): number;
     abstract apuestaMin(): number;
     abstract apuestaMax(): number;
+    abstract mostrarCredito(credito: number): void;
 
     public iniciar(): void {
         while (true) {
@@ -34,34 +35,3 @@ export abstract class Juego implements Apuesta {
         
     }
 }
-
-
-
-
-    // jugar(): void {
-    //     console.log(`Jugando a la tragamonedas ${this.nombre}...`);
-    //     const resultado = this.simbolos[Math.floor(Math.random() * this.simbolos.length)];
-    //     console.log(`Resultado: ${resultado}`);
-    //     this.obtenerResultado();
-    // }
-
-
-
-// iniciar() {
-//     this.jugando = true;
-//     console.log(`¡Bienvenido al juego de ${this.nombre}!`);
-// }
-
-// jugar() {
-//     if (!this.jugando) {
-//         console.log("Debes iniciar el juego primero.");
-//         return;
-//     }
-//     console.log("¡Estás jugando!");
-// }
-
-// finalizar() {
-//     this.jugando = false;
-//     console.log(`¡Gracias por jugar ${this.nombre}!`);
-// }
-// }

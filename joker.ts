@@ -2,13 +2,27 @@ import * as rls from 'readline-sync';
 import { Juego } from "./juego";
 
 export class Joker extends Juego {
-    private combinacion: string;
+    private simbolos: string[];
     private carrete: string[];
+    private credito: number;
 
-    public constructor(combinacion: string) {
+    public constructor() {
         super("Joker", 200, 3000);
-        this.combinacion = combinacion;
-        this.carrete = ["🚀", "🤡", "🎃", "💎"];
+        this.simbolos= ["🚀", "🤡", "🎃", "🎇", "👑"];
+        this.carrete = [];
+        this.credito= 100000;
+    }
+    
+    public apuesta(): number {
+        let apuestaUser: number;
+        while (true) {
+            apuestaUser = rls.questionInt("Ingrese su apuesta ( entre " + this.apuestaMin() + " y " + this.apuestaMax()+ "): ");
+            if (apuestaUser >= this.apuestaMin() && apuestaUser <= this.apuestaMax()) {
+                return apuestaUser;
+            } else {
+                console.log("Ingrese una apuesta válida.");
+            }
+        }
     }
 
     public jugar(): void {
@@ -16,58 +30,35 @@ export class Joker extends Juego {
         if (jugar === "A") {
             console.log("los carretes estan girando");
         }
-        const resultado = this.carrete[Math.floor(Math.random() * this.carrete.length)];
-        console.log(`Resultado: ${resultado}`);
-        this.obtenerResultado();
-        
+        this.girarCarrete();
+        // JOIN: combina filas para obtener un resultado del array
+        console.log(`Carrete: ${this.carrete.join(', ')}`);
+        if (this.carrete[0] === this.carrete[1] && this.carrete[1] === this.carrete[2]) {
+            console.log('¡Ganaste!');
+            this.credito += this.apuesta();
+        } else {
+            console.log('¡Perdiste!');
+            this.credito -= this.apuesta();
+        }
+        console.log(`Tu crédito actual es: ${this.credito}`);
     }
 
-
-    public apuesta(): number {
-            let apuestaUser: number=rls.questionInt("ingrese su apuesta: ")
-            if(apuestaUser >200 && apuestaUser <3000){
-                return apuestaUser;
-        } else {
-            console.log("ingrese nuevamente su apuesta.");
+    public girarCarrete(): void {
+        this.carrete = [];
+        for (let i = 0; i < 3; i++) {
+          const indice = Math.floor(Math.random() * this.simbolos.length);
+        this.carrete.push(this.simbolos[indice]);
         }
-        return apuestaUser;
+    }
+
+    public mostrarCredito(): void {
+            console.log(`tu credito es: ${this.credito}`);
+    }
+
+    public apuestaMin(): number {
+        return 200;
+    }
+    public apuestaMax(): number {
+        return 3000;
+    }
 }
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//     public jugar(): void {
-//         let jugar: string = rls.question("presione 'A' para girar el carrete: ");
-//         if (jugar === "A") {
-
-//             console.log("los carretes estan girando", this.carrete);
-//         }
-        
-//     }
-// }
-//   private jugar(): void {
-//     console.log(¡Los rodillos están girando!);
-//     const resultado = this.girarRodillos();
-//     const coincidencias = this.calcularCoincidencias(resultado);
-//     console.log(Resultado: ${ resultado.join( | ) });
-//     this.mostrarPremio(coincidencias);
-// }
-
-
