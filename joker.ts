@@ -9,7 +9,7 @@ export class Joker extends Juego {
     public constructor() {
         super("Joker", 200, 3000);
         this.simbolos= ["🚀", "🤡", "🎃", "🎇", "👑"];
-        this.carrete = [];
+        this.carrete = [];  
         this.credito= 100000;
     }
     
@@ -17,6 +17,7 @@ export class Joker extends Juego {
         let apuestaUser: number;
         while (true) {
             apuestaUser = rls.questionInt("Ingrese su apuesta ( entre " + this.apuestaMin() + " y " + this.apuestaMax()+ "): ");
+
             if (apuestaUser >= this.apuestaMin() && apuestaUser <= this.apuestaMax()) {
                 return apuestaUser;
             } else {
@@ -35,11 +36,11 @@ export class Joker extends Juego {
         console.log(`Carrete: ${this.carrete.join(', ')}`);
         if (this.carrete[0] === this.carrete[1] && this.carrete[1] === this.carrete[2]) {
             console.log('¡Ganaste!');
-            this.credito += this.apuesta();
+            // this.credito += this.apuesta();
         } else {
             console.log('¡Perdiste!');
-            this.credito -= this.apuesta();
-        }
+            // this.credito -= this.apuesta();
+        }   
         console.log(`Tu crédito actual es: ${this.credito}`);
     }
 
