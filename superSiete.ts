@@ -39,7 +39,7 @@ export class SuperSiete extends Juego {
             console.log('¡Perdiste!');
             this.credito -= this.apuesta();
         }
-        console.log(`Tu crédito actual es: ${this.credito}`);
+        console.log(this.mostrarCredito);
     }
 
     public girarCarrete(): void {
