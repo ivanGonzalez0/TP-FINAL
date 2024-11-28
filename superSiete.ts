@@ -1,4 +1,3 @@
-
 import { Juego } from "./juego";
 import * as rls from 'readline-sync';
 export class SuperSiete extends Juego {
@@ -8,7 +7,7 @@ export class SuperSiete extends Juego {
 
     public constructor() {
         super("superSiete", 2000, 30000);
-        this.simbolos= ["💯", "🌐", "🔟", "7️⃣", "🅱"];
+        this.simbolos= ["💯", "🍒", "🍀", "🌟", "💰"]
         this.carrete = [];
         this.credito= 100000;
     }
