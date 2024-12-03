@@ -1,77 +1,41 @@
-import { Joker } from './joker';
-import * as rls from 'readline-sync';
+import { Joker } from './joker'; //importa la clase joker
+import * as fs from 'fs'; //Importa el módulo del sistema de archivos (fs) para permitir la lectura de archivos.
 
 
-export class    SuperJoker extends Joker{
-    private bonus:string [];
-    private tiradasGratis:number=8;
-   
+export class SuperJoker extends Joker { //Define la clase SuperJoker que hereda de Joker.
+    private bonus: string[];
 
-    public contructor(nombre:string,min:number,max:number,){
-        
-        this.bonus= ["💰"]
-        this.tiradasGratis =8;
-    }
-    public apuesta(): number {
-        let apuestaUser: number;
-        while (true) {
-            apuestaUser = rls.questionInt("Ingrese su apuesta ( entre " + this.apuestaMin() + " y " + this.apuestaMax()+ "): ");
-
-            if (apuestaUser >= this.apuestaMin() && apuestaUser <= this.apuestaMax()) {
-                return apuestaUser;
-            } else {
-                console.log("Ingrese una apuesta válida.");
-            }
-        }
+    public constructor() {
+        super();
+        this.bonus = ["💰", "💰", "💰"];
     }
 
     public jugar(): void {
-        let jugar: string = rls.question("presione 'A' para girar el carrete: ");
-        if (jugar === "A") {
-            console.log("los carretes estan girando");
+        super.jugar();
+        if (this.carrete[0] === this.carrete[1] && this.carrete[1] === this.carrete[2]) {
+            this.ganarBonus();
         }
-        this.girarCarrete();
-        // JOIN: combina filas para obtener un resultado del array
-        console.log(`Carrete: ${this.carrete.join(', ')}`);
-        // if (this.carrete[0] === this.carrete[1] && this.carrete[1] === this.carrete[2]) {
-        //     console.log('¡Ganaste!');
-        //     // this.credito += this.apuesta();
-        // } 
-        // else {
-        //     console.log('¡Perdiste!');
-        //     // this.credito -= this.apuesta();
-        // }   
-        console.log(`Tu crédito actual es: ${this.credito}`);
     }
-    public ganarBonus():void{
-        let bonus:string;
-        if (this.bonus[0] === this.bonus[1] && this.bonus[1] === this.bonus[2]) {
-            console.log("FELICIDADES!!! GANO EL BONUS  💰💰💰");
-            this.credito += this.apuesta();
-        } 
-        else {
-            console.log('¡Perdiste!');
-            this.credito -= this.apuesta();
-        }   
-        console.log(`Tu crédito actual es: ${this.credito}`);
-    }
-
-     public girarCarrete(): void {
-        this.carrete = [];
-        for (let i = 0; i < 3; i++) {
-          const indice = Math.floor(Math.random() * this.simbolos.length);
-        this.carrete.push(this.simbolos[indice]);
+    public leerInstrucciones(): void {
+        try {
+            const instrucciones = fs.readFileSync('superJoker.txt', 'utf8'); //lee archivo sincrónicamente.
+            console.log(instrucciones);//Si el archivo se lee correctamente, su contenido se muestra en la consola
+        } catch (error) { //Si ocurre un error, se muestra un mensaje de error
+            console.log('Error al leer el archivo de instrucciones');
         }
     }
 
-    public mostrarCredito(): void {
-            console.log(`tu credito es: ${this.credito}`);
+    public ganarBonus(): void { //Método que otorga un premio adicional.
+        console.log("¡FELICIDADES GANASTE EL BONUS!");
+        const multiplicador = this.bonus.length; // Utiliza la cantidad de elementos en el bonus como multiplicador
+        this.credito *= multiplicador; // Multiplica el crédito por el multiplicador
+        console.log(`Tu crédito se ha multiplicado por ${multiplicador} y ahora es: ${this.credito}`);//Muestra el nuevo crédito del usuario en la consola.
     }
-
+    
     public apuestaMin(): number {
-        return 500;
+        return 5000;
     }
     public apuestaMax(): number {
-        return 5000;
+        return 50000;
     }
 }
