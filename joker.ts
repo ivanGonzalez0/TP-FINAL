@@ -11,8 +11,7 @@ export class Joker extends Juego {
 
     public constructor() { 
         super("Joker");
-        // this.simbolos = ["🚀", "🤡", "🎃", "🎇", "👑", "💰"];
-        this.simbolos = ["💰", "💰", "💰"];
+        this.simbolos = ["🚀", "🤡", "🎃", "🎇", "👑", "💰"];
         this.carrete = [];
         this.credito = 100000;
         this.apuestaActual = 0;
